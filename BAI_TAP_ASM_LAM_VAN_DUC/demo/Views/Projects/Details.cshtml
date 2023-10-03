@@ -1,0 +1,94 @@
+﻿@model demo.DTO.CustomDetailProject
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<a asp-action="Index">Back to List</a>
+<fieldset>
+    <div>
+        <div class="form-group">
+            <div class="col-xs-6">
+                <label for="first_name"><h5>Project key</h5></label>
+                <input type="text" class="form-control" value="@Model.project.ProjectKey" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-6">
+                <label for="first_name"><h5>Project Name</h5></label>
+                <input type="text" class="form-control" value="@Model.project.ProjectName" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-6">
+                <label for="first_name"><h5>UserCreate</h5></label>
+                <input type="text" class="form-control" value="@Model.project.UserCrate" readonly>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-danger" asp-action="Edit" asp-route-id="@Model.project.ProjectId">Edit</a> |
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Jobs:</legend>
+    <div>
+
+        <p>
+            <a href="/ProjectJobs/Create?ProjectId=@Model.project.ProjectId&ProjectKey=@Model.project.ProjectKey">Add</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Project key
+                    </th>
+                    <th>Status</th>
+                    <th>
+                        Title task
+                    </th>
+                    <th>
+                        Task type
+                    </th>
+                    <th>
+                        DeadLine
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.projectJobs)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectKey)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StatusTask)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TitleTask)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TypeTask)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeadLineTask)
+                        </td>
+                        <td>
+                            <a href="/ProjectJobs/Edit/@item.TaskId">Edit</a> |
+                            <a href="/ProjectJobs/Details/@item.TaskId">Details</a> |
+                            <a href="/ProjectJobs/Delete/@item.TaskId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+
+
+    
+

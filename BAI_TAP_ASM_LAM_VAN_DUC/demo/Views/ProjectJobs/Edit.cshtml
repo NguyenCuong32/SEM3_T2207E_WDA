@@ -1,0 +1,94 @@
+﻿@model demo.Models.ProjectJob
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProjectJob</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TaskId" />
+            <input type="hidden" asp-for="ProjectId" class="form-control" />
+
+            <div class="form-group">
+                <label asp-for="ProjectKey" class="control-label"></label>
+                <input asp-for="ProjectKey" class="form-control" />
+                <span asp-validation-for="ProjectKey" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StatusTask" class="control-label"></label>
+                <select asp-for="StatusTask" class="form-control">
+                    <option>To do</option>
+                    <option>In Progess</option>
+                    <option>Done</option>
+                </select>
+                <span asp-validation-for="StatusTask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TitleTask" class="control-label"></label>
+                <input asp-for="TitleTask" class="form-control" />
+                <span asp-validation-for="TitleTask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescriptionTask" class="control-label"></label>
+                <input asp-for="DescriptionTask" class="form-control" />
+                <span asp-validation-for="DescriptionTask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeTask" class="control-label"></label>
+                <input asp-for="TypeTask" class="form-control" />
+                <span asp-validation-for="TypeTask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeadLineTask" class="control-label"></label>
+                <input asp-for="DeadLineTask" class="form-control" />
+                <span asp-validation-for="DeadLineTask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriorityTask" class="control-label"></label>
+                <input asp-for="PriorityTask" class="form-control" />
+                <span asp-validation-for="PriorityTask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LevelTask" class="control-label"></label>
+                <input asp-for="LevelTask" class="form-control" />
+                <span asp-validation-for="LevelTask" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UserImplement" class="control-label"></label>
+                <input asp-for="UserImplement" class="form-control" />
+                <span asp-validation-for="UserImplement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskCreateDate" class="control-label"></label>
+                <input asp-for="TaskCreateDate" class="form-control" />
+                <span asp-validation-for="TaskCreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskCreateDate" class="control-label"></label>
+                <input asp-for="UserCreate" class="form-control" readonly/>
+                <span asp-validation-for="TaskCreateDate" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

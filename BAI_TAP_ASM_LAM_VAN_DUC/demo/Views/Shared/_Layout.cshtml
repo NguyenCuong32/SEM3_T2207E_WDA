@@ -1,0 +1,210 @@
+﻿@using System.Text.Json;
+
+@{
+    var principal = Context.User;
+    User userJson = null;
+    if (principal != null)
+    {
+        // Lấy ra claim có tên "User"
+        var userClaim = principal.FindFirst("UserLogin");
+
+        if (userClaim != null)
+        {
+            // Lấy giá trị claim và deserialize nó
+            userJson = JsonSerializer.Deserialize<User>(userClaim.Value);
+
+        }
+       
+    }
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - demo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+</head>
+<body class="container">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/projectjobs/index">Kanban board</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dự án
+                        </a>
+                        <div class="dropdown-menu" id="ListProjectLayout" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">
+                               
+                            </a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Projects/Index">Tất cả dự án</a>
+                        </div>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@userJson.FullName</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/Profile">Thông tin tài khoản</a>
+                                <a class="dropdown-item" href="/Projects/Index">Dự án</a>
+                                <a class="dropdown-item" href="/User/UsersSystem">Hệ thống người dùng</a>
+                                <a class="dropdown-item" href="/Account/LogOut">LogOut</a>
+
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+
+        <div class="modal fade" id="ModalDetailTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thông tin công việc</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" id="messageEditTask"></div>
+                        <form>
+                            <div class="form-group">
+                                <label>Project</label>
+                                <div>
+                                    <input type="text" class="form-control" onchange="FindProjectForEditTask()" id="ProjectKeyDetail" style="position:relative" onfocus="focusFindProjectEditTask()" onblur="blurFindProjectEditTask()" autocomplete="off"/>
+                                    <div class="table-responsive" id="divProjectEditTask" style="display:none;position: absolute;z-index: 2;background:#fff;border:1px solid #333">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Project Key</th>
+                                                    <th>Project Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tdobyProjectEditTask">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <input type="hidden" class="form-control" id="TaskIdDetail" />
+                                    <input type="hidden" class="form-control" id="ProjectIdDetail" />
+                                </div>
+                            </div>
+
+                             <div class="form-group">
+                                <label>Tiêu đề</label>
+                                <div>
+                                    <input type="text" name="TitleTask" class="form-control" id="TitleTaskDetail" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nội dung</label>
+                                <div>
+                                    <textarea class="form-control" name="DescriptionTask" id="DescriptionTaskDetail"></textarea>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label>Deadline </label>
+                                <div>
+                                    <input type="date" id="DeadLineTaskDetail" name="DeadLineTask" class="form-control" />
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-group">
+                                <label>Mức độ </label>
+                                <div>
+                                    <select class="form-control" name="PriorityTask" id="PriorityTaskDetail">
+                                        <option>Cực gấp</option>
+                                        <option>gấp</option>
+                                        <option>Trung bình</option>
+                                        <option>Thấp</option>
+                                        <option>Cực thấp</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Level </label>
+                                <div>
+                                    <select id="LevelTaskDetail" name="LevelTask" class="form-control">
+                                        <option>Khó</option>
+                                        <option>Trung bình</option>
+                                        <option>Dễ</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Người thực hiện </label>
+                                <div>
+                                    <input type="text" class="form-control" style="position:relative" onchange="FindUserForEditTask()" id="findUserEditTask" onblur="blurFindUserEditTask()" onfocus="focusFindUserEditTask()" />
+                                    <input type="hidden" id="UserImplementNameDetail" name="UserImplement" class="form-control"/>
+                                    <div class="table-responsive" id="divUserEditTask" style="display:none;position: absolute;z-index: 2;background:#fff;border:1px solid #333">
+                                       <table class="table table-hover">
+                                           <tbody id="tdobyUserEditTask">
+                                           </tbody>
+                                       </table>
+                                   </div>
+                                </div>
+                            </div>
+                          
+                        </form>
+                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="Func_SaveEditProjectJob()">Lưu</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <!-- Add additional buttons or actions if needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - demo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/_layout.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>

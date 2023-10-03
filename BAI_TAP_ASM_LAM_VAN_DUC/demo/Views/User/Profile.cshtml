@@ -1,0 +1,66 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Profile";
+    var message = ViewBag.Message;
+    string StatusCode = ViewBag.StatusCode;
+
+}
+
+<form  class="form" action="/Profile" enctype="multipart/form-data" method="post" id="registrationForm">
+<input type="hidden" name="Username" value="@Model.Username">
+<input type="hidden" name="Active" value="@Model.Active">
+<input type="hidden" name="Avatar" value="@Model.Avatar">
+
+
+<div class="container bootstrap snippet">
+    <div class="row">
+        <div class="col-sm-3">
+            <!--left col-->
+            <div class="text-center">
+                <img src="@Model.Avatar" style="width: 150px;height: 150px;border-radius: 50%;" class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Upload a different photo...</h6>
+                <input type="file" style="width:100%" name="file" class="text-center center-block file-upload">
+            </div></hr><br>
+        </div><!--/col-3-->
+        <div class="col-sm-9">
+                @if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(StatusCode) && StatusCode != "200")
+                {
+                    <div class="alert alert-danger">@message</div>
+                }
+                else if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(StatusCode) && StatusCode == "200")
+                {
+                    <div class="alert alert-success">@message</div>
+                }
+            <div class="tab-content">
+                <div>
+                    <hr>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="first_name"><h5>Fullname</h5></label>
+                                <input type="text" class="form-control" name="FullName" value="@Model.FullName" placeholder="name" title="enter your name">
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <label for="email"><h5>Email</h5></label>
+                                <input type="email" class="form-control" name="Email" Value="@Model.Email" placeholder="you@email.com" title="enter your email.">
+                            </div>
+                        </div>
+                   
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <br>
+                                <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                            </div>
+                        </div>
+                    <hr>
+                </div><!--/tab-pane-->
+            </div><!--/tab-pane-->
+        </div><!--/tab-content-->
+    </div><!--/col-9-->
+</div><!--/row-->
+
+</form>

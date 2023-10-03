@@ -1,0 +1,111 @@
+﻿
+@model IEnumerable<demo.Models.ProjectJob>
+
+@{
+    ViewData["Title"] = "Kanban board";
+}
+
+
+<style>
+    .board {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        background-color: #f0f0f0;
+        overflow: auto;
+    }
+
+    .column {
+        flex: 1;
+        min-width: 300px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .column-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+
+    .card .btn-onclick {
+        width: 100%;
+    }
+
+    .card {
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+        .card .btn-onclick:hover {
+            text-decoration: none;
+            color: #084298;
+            background-color: #cfe2ff;
+            border-color: #b6d4fe;
+        }
+
+        .card button {
+            border: none;
+        }
+
+            .card button:hover, .card button:focus, .card button:focus-visible {
+                color: #084298;
+                background-color: #cfe2ff;
+                border-color: #b6d4fe;
+                outline: none !important;
+            }
+</style>
+
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger">@ViewBag.Message</div>
+}
+<div class="board">
+    <div class="column">
+        <div class="column-header">To Do</div>
+        @foreach (var task in Model.Where(t => t.StatusTask == "To do").ToList())
+        {
+            <div class="card">
+                <button type="button" class="btn-onclick" onclick="transferDetailTask(@Html.Raw(Json.Serialize(task).ToString().Replace('"','\'')))" data-toggle="modal" data-target="#ModalDetailTask">@task.TitleTask</button>
+                <button onclick="window.location.href='/projectjobs/ChangeStatusTask?TaskId=@task.TaskId&StatusTask=In Progess'">&rarr;</button>
+            </div>
+        }
+    </div>
+    <div class="column">
+        <div class="column-header">In Progress</div>
+        @foreach (var task in Model.Where(t => t.StatusTask == "In Progess").ToList())
+        {
+            <div class="card">
+                <button  onclick="window.location.href='/projectjobs/ChangeStatusTask?TaskId=@task.TaskId&StatusTask=To do'">&larr;</button>
+                <button type="button" class="btn-onclick" data-toggle="modal" data-target="#ModalDetailTask" onclick="transferDetailTask(@Html.Raw(Json.Serialize(task).ToString().Replace('"','\'')))">@task.TitleTask</button>
+                <button  onclick="window.location.href='/projectjobs/ChangeStatusTask?TaskId=@task.TaskId&StatusTask=Done'">&rarr;</button>
+            </div>
+
+        }
+    </div>
+    <div class="column">
+        <div class="column-header">Done</div>
+        @foreach (var task in Model.Where(t => t.StatusTask == "Done").ToList())
+        {
+            <div class="card">
+                <button  onclick="window.location.href='/projectjobs/ChangeStatusTask?TaskId=@task.TaskId&StatusTask=In Progess'">&larr;</button>
+                <button type="button" class="btn-onclick" data-toggle="modal" data-target="#ModalDetailTask" onclick="transferDetailTask(@Html.Raw(Json.Serialize(task).ToString().Replace('"','\'')))">@task.TitleTask</button>
+            </div>
+
+        }
+    </div>
+</div>

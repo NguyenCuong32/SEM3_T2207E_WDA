@@ -1,0 +1,48 @@
+﻿@model demo.Models.Project
+
+@{
+    ViewData["Title"] = "Editproject";
+}
+
+
+<h4>Edit project</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProjectId" />
+            <div class="form-group">
+                <label asp-for="ProjectKey" class="control-label"></label>
+                <input asp-for="ProjectKey" class="form-control" />
+                <span asp-validation-for="ProjectKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectLead" class="control-label"></label>
+                <input asp-for="ProjectLead" class="form-control" />
+                <span asp-validation-for="ProjectLead" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserCrate" class="control-label"></label>
+                <input asp-for="UserCrate" class="form-control" />
+                <span asp-validation-for="UserCrate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
