@@ -1,0 +1,48 @@
+﻿@model Basketball_Shoes.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="/Admin/Products/Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="thumbnail" class="control-label">Thumbnail:</label>
+                <input asp-for="thumbnail" class="form-control" />
+                <span asp-validation-for="thumbnail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label">Description:</label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="control-label">Price:</label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sale" class="control-label">Sale:</label>
+                <input asp-for="sale" class="form-control" />
+                <span asp-validation-for="sale" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
