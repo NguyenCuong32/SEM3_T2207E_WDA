@@ -1,4 +1,0 @@
-﻿1. Kết nối với database từ visual studio
-2. Cài đặt thư viện cho Entity framework
-3. Tạo ra model từ Database. 
-Scaffold-DbContext "Data Source=DESKTOP-JHD5FAU\CUONGNX;Initial Catalog=AdventureWorks2019;Integrated Security=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
