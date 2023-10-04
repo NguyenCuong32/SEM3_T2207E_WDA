@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/Sem3.Example.WebAPI.props" />
-</Project>
