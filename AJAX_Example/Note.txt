@@ -1,0 +1,23 @@
+1. CORS( Cross - Orgin - Resource-Sharing) - Api được tạo ở một service và invoking từ một server khác.
+2. Các bước thực hiện:
+	Bước 1: Tạo 1 API lấy dữ liệu từ server API
+	Bước 2: Tạo một trang web thực hiện việc Call api bằng AJAX
+	=> Báo lỗi CORS
+	Bước 3: Tại ứng Dụng API cài đặt CORS bao gồm add policy, add server, Nuget cài đặt thư viện install-package Microsoft.AspNet.WebApi.Cors
+	Bước 4: Chạy thử
+
+
+3. Giải thích một số feature chính
+	AllowAnyOrigin: Cho phép truy cập từ bất cứ trang nào, tương đương *
+	AllowAnyMethod: Cho phép bất kỳ phương thứ nào, tương đương *
+	AllowAnyHeader: Cho phép bất cứ header nào, tương đương *
+
+4. Tùy chình CORS bằng việc sử dụng Attributes như [EnableCors("CorsPolicy")]
+
+
+*** API Gateway
+https://microservices.io/patterns/apigateway.html
+https://microservices.io/patterns/apigateway.html
+*** Ocelot
+*** nginx
+*** Queue: Rabbitmq, Kafka
